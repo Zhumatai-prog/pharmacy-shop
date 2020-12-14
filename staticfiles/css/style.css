@@ -1,0 +1,23 @@
+body {
+  margin-left: 15%;
+  margin-right: 15%;
+}
+
+.btn {
+  width: 250px;
+  height: 150px;
+  margin: 15px;
+  padding: 20px;
+  border-radius: 10px;
+  line-height: 120px;
+}
+
+.list-group {
+    display: inline-block;
+    border-color: black;
+    margin-left: 0;
+}
+
+.list-group-item {
+    border-color: black;
+}
