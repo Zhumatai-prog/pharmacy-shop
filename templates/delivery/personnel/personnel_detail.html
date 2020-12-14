@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">Personnel Details #{{ personnel.id }}</h5>
+
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">ID</dt>
+                <dd class="col-sm-9">{{ personnel.id }}</dd>
+                <dt class="col-sm-3">Фио</dt>
+                <dd class="col-sm-9">
+                    {{ personnel.first_name }}
+                    {{ personnel.last_name }}
+                    {{ personnel.patronymic }}
+                </dd>
+                <dt class="col-sm-3">Должность</dt>
+                <dd class="col-sm-9">{{ personnel.post }}</dd>
+                <dt class="col-sm-3">Серия паспорта</dt>
+                <dd class="col-sm-9">{{ personnel.serial_pas }}</dd>
+                <dt class="col-sm-3">Номер паспорта</dt>
+                <dd class="col-sm-9">{{ personnel.num_pas }}</dd>
+                <dt class="col-sm-3">Адрес</dt>
+                <dd class="col-sm-9">{{ personnel.address }}</dd>
+                <dt class="col-sm-3">Номер телефона</dt>
+                <dd class="col-sm-9">{{ personnel.phone_num }}</dd>
+            </dl>
+            {% if user.is_superuser %}
+                <button type="submit "class="btn-success card-title">
+                    <a href="{% url 'delivery:personnel_update' pk=object.pk %}">
+                        Edit
+                    </a>
+                </button>
+                <button type="submit" class="btn-danger card-title">
+                    <a href="{% url 'delivery:personnel_delete' pk=object.pk %}">
+                        Delete
+                    </a>
+                </button>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}

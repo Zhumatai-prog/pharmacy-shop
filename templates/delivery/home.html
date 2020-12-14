@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <a href="{% if user.is_authenticated %}
+                {% url 'delivery:product_list' %}
+             {% else %}
+                {% url 'delivery:login_page' %}
+             {% endif %}" class="btn btn-success">
+             Продукты
+    </a>
+    <a href="{% if user.is_authenticated %}
+                {% url 'delivery:personnel_list' %}
+             {% else %}
+                {% url 'delivery:login_page' %}
+             {% endif %}" class="btn btn-success">
+             Персонал
+    </a>
+    <a href="{% if user.is_authenticated %}
+                {% url 'delivery:supplier_list' %}
+             {% else %}
+                {% url 'delivery:login_page' %}
+             {% endif %}" class="btn btn-success">
+             Поставщики
+    </a>
+
+
+    {% if user.is_superuser %}
+        <a href="{% url 'delivery:product_sale' %} "class="btn btn-success">Продажа</a>
+        <a href="{% url 'delivery:salary_list' %}" class="btn btn-success">Зарплата</a>
+        <a href="{% url 'delivery:order_list' %}"class="btn btn-success">Заказ продуктов</a>
+        <a href="{% url 'delivery:product_supply' %} "class="btn btn-success">Поставка продуктов</a>
+        <a href="{% url 'delivery:customers' %}" class="btn btn-success">Клиенты</a>
+        <a href="{% url 'delivery:incomes' %}" class="btn btn-success">Доходы</a>
+        <a href="{% url 'delivery:expenses' %}" class="btn btn-success">Рассходы</a>
+        <a href="{% url 'delivery:accounting' %}" class="btn btn-success">Бухгалтерский учёт</a>
+    {% endif %}
+
+{% endblock %}

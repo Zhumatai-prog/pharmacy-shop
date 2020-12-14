@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    < На главную
+{% endblock header %}
+
+{% block content %}
+    <br>
+    <table class="table">
+        <tr>
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Название</th>
+                    <th scope="col">Адрес</th>
+                    <th scope="col">Номер</th>
+                    {% if user.is_superuser %}
+                        <th scope="col">Настройки</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for supplier in suppliers %}
+                    <tr>
+                        <td>{{ supplier.id }}</td>
+                        <td>{{ supplier.name }}</td>
+                        <td>{{ supplier.address }}</td>
+                        <td>{{ supplier.phone_num }}</td>
+                        <td>
+                            {% if user.is_superuser %}
+                                <button type="submit "class="btn-success card-title">
+                                    <a href="{% url 'delivery:supplier_update' pk=supplier.pk %}">
+                                        Edit
+                                    </a>
+                                </button>
+
+                                <button type="submit "class="btn-danger card-title">
+                                    <a href="{% url 'delivery:supplier_delete' pk=supplier.pk %}">
+                                        Delete
+                                    </a>
+                                </button>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </tr>
+    </table>
+    <nav aria-label="Page navigation example">
+        {% if is_paginated %}
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{page_obj.previous_page_number}}">
+                            &laquo;
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#">&laquo;</a>
+                    </li>
+                {% endif %}
+
+                {% for i in paginator.page_range %}
+                    {% if page_obj.number == i %}
+                        <li class="page-item"><a class="page-link active">{{ i }}</a></li>
+                    {% else %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a href="?page={{page_obj.next_page_number}}" class="page-link">
+                            &raquo;
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link">&raquo;</a>
+                    </li>
+                {% endif %}
+            </ul>
+        {% endif %}
+    </nav>
+    {% if user.is_superuser %}
+        <a href="{% url 'delivery:supplier_create' %}"><button class="btn-success">+Добавить</button></a>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">Personnel Details #{{ customer.id }}</h5>
+
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">ID</dt>
+                <dd class="col-sm-9">{{ customer.id }}</dd>
+                <dt class="col-sm-3">Фио</dt>
+                <dd class="col-sm-9">
+                    {{ customer.first_name }}
+                    {{ customer.last_name }}
+                    {{ customer.patronymic }}
+                </dd>
+                <dt class="col-sm-3">Адрес</dt>
+                <dd class="col-sm-9">{{ customer.address }}</dd>
+                <dt class="col-sm-3">Номер телефона</dt>
+                <dd class="col-sm-9">{{ customer.phone_num }}</dd>
+                <dt class="col-sm-3">Серия паспорта</dt>
+                <dd class="col-sm-9">{{ customer.serial_pas_c }}</dd>
+                <dt class="col-sm-3">Номер паспорта</dt>
+                <dd class="col-sm-9">{{ customer.number_pas_c }}</dd>
+
+            </dl>
+            {% if user.is_superuser %}
+                <button type="submit "class="btn-success card-title">
+                    <a href="{% url 'delivery:customer_update' pk=object.pk %}">
+                        Edit
+                    </a>
+                </button>
+                <button type="submit" class="btn-danger card-title">
+                    <a href="{% url 'delivery:customer_delete' pk=object.pk %}">
+                        Delete
+                    </a>
+                </button>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}

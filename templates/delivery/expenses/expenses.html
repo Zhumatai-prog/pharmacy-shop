@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    < На главную
+{% endblock header %}
+
+{% block content %}
+    <br>
+    <table class="table">
+        <tr>
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Месяц</th>
+                    <th scope="col">Год</th>
+                    <th scope="col">Аренда</th>
+                    <th scope="col">Коммунальные услуги</th>
+                    <th scope="col">Реклама</th>
+                    <th scope="col">Внутренние рассходы</th>
+                    <th scope="col">Общая сумма рассходов</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for expense in expenses reversed %}
+                    <tr>
+                        <td>{{ expense.month }}</td>
+                        <td>{{ expense.year }}</td>
+                        <td>{{ expense.rent }}</td>
+                        <td>{{ expense.utilities }}</td>
+                        <td>{{ expense.advertising }}</td>
+                        <td>{{ expense.inner_expenses }}</td>
+                        <td>{{ expense.total_expense }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </tr>
+    </table>
+    <nav aria-label="Page navigation example">
+        {% if is_paginated %}
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{page_obj.previous_page_number}}">
+                            &laquo;
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#">&laquo;</a>
+                    </li>
+                {% endif %}
+
+                {% for i in paginator.page_range %}
+                    {% if page_obj.number == i %}
+                        <li class="page-item"><a class="page-link active">{{ i }}</a></li>
+                    {% else %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a href="?page={{page_obj.next_page_number}}" class="page-link">
+                            &raquo;
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link">&raquo;</a>
+                    </li>
+                {% endif %}
+            </ul>
+        {% endif %}
+    </nav>
+    {% if user.is_superuser %}
+        <a href="{% url 'delivery:expense_create' %}"><button class="btn-success">+Добавить</button></a>
+    {% endif %}
+{% endblock %}

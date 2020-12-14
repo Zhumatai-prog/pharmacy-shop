@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">Product Details #{{ product.id }}</h5>
+
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">ID</dt>
+                <dd class="col-sm-9">{{ product.id }}</dd>
+                <dt class="col-sm-3">Название</dt>
+                <dd class="col-sm-9">{{ product.product_name }}</dd>
+                <dt class="col-sm-3">Состав</dt>
+                <dd class="col-sm-9">{{ product.composition }}</dd>
+                <dt class="col-sm-3">Описание</dt>
+                <dd class="col-sm-9">{{ product.description }}</dd>
+                <dt class="col-sm-3">Цена</dt>
+                <dd class="col-sm-9">{{ product.cost_one }}</dd>
+                <dt class="col-sm-3">Количество</dt>
+                <dd class="col-sm-9">{{ product.amount }}</dd>
+            </dl>
+            {% if user.is_superuser %}
+                <button type="submit "class="btn-success card-title">
+                    <a href="{% url 'delivery:product_update' pk=product.id %}">
+                        Edit
+                    </a>
+                </button>
+                <button type="submit" class="btn-danger card-title">
+                    <a href="{% url 'delivery:product_delete' pk=product.id %}">
+                        Delete
+                    </a>
+                </button>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}
